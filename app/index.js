@@ -35,28 +35,42 @@ async function getApiData(){
   uvDataArray = responseJson.result
   console.log(uvDataArray)
   const labels = [
-    uvDataArray[0].uv_time,
-    uvDataArray[1].uv_time,
-    uvDataArray[2].uv_time,
-    uvDataArray[3].uv_time,
-    uvDataArray[4].uv_time,
-    uvDataArray[5].uv_time,
-    uvDataArray[6].uv_time,
-    uvDataArray[7].uv_time,
-    uvDataArray[8].uv_time,
-    uvDataArray[9].uv_time,
-    uvDataArray[10].uv_time,
-    uvDataArray[11].uv_time,
-    uvDataArray[12].uv_time,
+    uvDataArray[0].uv_time, 
+    uvDataArray[1].uv_time, 
+    uvDataArray[2].uv_time, 
+    uvDataArray[3].uv_time, 
+    uvDataArray[4].uv_time, 
+    uvDataArray[5].uv_time, 
+    uvDataArray[6].uv_time, 
+    uvDataArray[7].uv_time, 
+    uvDataArray[8].uv_time, 
+    uvDataArray[9].uv_time, 
+    uvDataArray[10].uv_time, 
+    uvDataArray[11].uv_time, 
+    uvDataArray[12].uv_time, 
     uvDataArray[13].uv_time
   ];
   const data = {
     labels: labels,
     datasets: [{
-      label: 'My First dataset',
+      label: 'Todays UV Index',
       backgroundColor: 'rgb(255, 99, 132)',
       borderColor: 'rgb(255, 99, 132)',
-      data: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+      data: [
+      uvDataArray[0].uv, 
+      uvDataArray[1].uv, 
+      uvDataArray[3].uv, 
+      uvDataArray[4].uv, 
+      uvDataArray[5].uv, 
+      uvDataArray[6].uv, 
+      uvDataArray[7].uv, 
+      uvDataArray[8].uv, 
+      uvDataArray[9].uv, 
+      uvDataArray[10].uv, 
+      uvDataArray[11].uv, 
+      uvDataArray[12].uv, 
+      uvDataArray[13].uv 
+    ],
     }]
   };
   
