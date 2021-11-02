@@ -1,49 +1,54 @@
-const apiKey = 'eecb346faf3da5f29b487b99c291e0b8'
+const apiKey = '48c123adbe84d06b9390564c28f11e6a'
 // 48c123adbe84d06b9390564c28f11e6a
 // 93f21f1aca9ebdef4701de35fc8354e5
 // eecb346faf3da5f29b487b99c291e0b8 
 const uvHtml = document.getElementById('uv')
 
+let lat = null
+let long = null
+let apiURL = null
+let uvDataArray = null
+
 function getCurrentPosition() {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition)
+        navigator.geolocation.getCurrentPosition((position) =>{
+          lat = position.coords.latitude
+          long = position.coords.longitude
+          apiURL = `https://api.openuv.io/api/v1/forecast?lat=${lat}&lng=${long}`
+          getApiData()
+        }
+        )
     } else {
         console.log("Geo location not supported")
     }
 }
 
-async function showPosition(position) {
-    let longitude = position.coords.longitude
-    let latitude = position.coords.latitude
-    const response = await fetch(`https://api.openuv.io/api/v1/forecast?lat=${latitude}&lng=${longitude}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'x-access-token': apiKey,
-        }
-    });
-    const uvDataArray = await response.json()
-    uvDataArray.result.forEach(element => {
-        let date = new Date(element.uv_time)
-        let hour = date.getHours()
-        let seconds = date.getSeconds()
-        uvHtml.innerHTML +=  `${(element.uv)} - ${hour}:${seconds} | `
-    });
-    console.log(uvDataArray.result)
-}
-
-date = new Date('2021-11-01T02:12:51.233Z')
-year = date.getHours()
-console.log(year)
-
-
-const labels = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
+async function getApiData(){
+  const response = await fetch(apiURL, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': apiKey
+    }
+  })
+  const responseJson = await response.json()
+  uvDataArray = responseJson.result
+  console.log(uvDataArray)
+  const labels = [
+    uvDataArray[0].uv_time,
+    uvDataArray[1].uv_time,
+    uvDataArray[2].uv_time,
+    uvDataArray[3].uv_time,
+    uvDataArray[4].uv_time,
+    uvDataArray[5].uv_time,
+    uvDataArray[6].uv_time,
+    uvDataArray[7].uv_time,
+    uvDataArray[8].uv_time,
+    uvDataArray[9].uv_time,
+    uvDataArray[10].uv_time,
+    uvDataArray[11].uv_time,
+    uvDataArray[12].uv_time,
+    uvDataArray[13].uv_time
   ];
   const data = {
     labels: labels,
@@ -54,8 +59,8 @@ const labels = [
       data: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
     }]
   };
-
-const config = {
+  
+  const config = {
     type: 'bar',
     data: data,
     options: {
@@ -66,8 +71,36 @@ const config = {
       }
     },
   };
-
-const myChart = new Chart(
+  
+  const myChart = new Chart(
     document.getElementById('myChart'),
     config
-  );
+  )
+
+  
+}
+
+// async function showPosition(position) {
+//     let longitude = position.coords.longitude
+//     let latitude = position.coords.latitude
+//     const response = await fetch(`https://api.openuv.io/api/v1/forecast?lat=${latitude}&lng=${longitude}`, {
+//         method: 'GET',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'x-access-token': apiKey,
+//         }
+//     });
+//     const uvDataArray = await response.json()
+//     console.log(uvDataArray.result)
+//     return uvDataArray.result
+//     uvDataArray.result.forEach(element => {
+//         let date = new Date(element.uv_time)
+//         let hour = date.getHours()
+//         let seconds = date.getSeconds()
+//         uvHtml.innerHTML +=  `${(element.uv)} - ${hour}:${seconds} | `
+//     })
+// }
+
+// const uvData = function showPosition(position)
+
+
