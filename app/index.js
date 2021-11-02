@@ -27,7 +27,7 @@ async function showPosition(position) {
         let date = new Date(element.uv_time)
         let hour = date.getHours()
         let seconds = date.getSeconds()
-        uvHtml.innerHTML += element.uv + " UV - " + hour + " | "
+        uvHtml.innerHTML +=  `${(element.uv)} - ${hour}:${seconds} | `
     });
     console.log(uvDataArray.result)
 }
@@ -35,3 +35,39 @@ async function showPosition(position) {
 date = new Date('2021-11-01T02:12:51.233Z')
 year = date.getHours()
 console.log(year)
+
+
+const labels = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+  ];
+  const data = {
+    labels: labels,
+    datasets: [{
+      label: 'My First dataset',
+      backgroundColor: 'rgb(255, 99, 132)',
+      borderColor: 'rgb(255, 99, 132)',
+      data: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    }]
+  };
+
+const config = {
+    type: 'bar',
+    data: data,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    },
+  };
+
+const myChart = new Chart(
+    document.getElementById('myChart'),
+    config
+  );
