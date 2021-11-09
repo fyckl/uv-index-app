@@ -1,86 +1,109 @@
-const apiKey = '48c123adbe84d06b9390564c28f11e6a'
+const uvAPIKey = '48c123adbe84d06b9390564c28f11e6a'
+// Extra uvAPI Keys incase of a rate limit 
 // 48c123adbe84d06b9390564c28f11e6a
 // 93f21f1aca9ebdef4701de35fc8354e5
 // eecb346faf3da5f29b487b99c291e0b8 
+const positionAPIKey = "f906b0b0af0e48e1871c65bb627f0a49"
+
 const uvHtml = document.getElementById('uv')
+const cityInput = document.getElementById('autoComplete')
 
 let lat = null
 let long = null
 let apiURL = null
 let uvDataArray = null
+let city = null
+let country = null
 
-function getCurrentPosition() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) =>{
-          lat = position.coords.latitude
-          long = position.coords.longitude
-          apiURL = `https://api.openuv.io/api/v1/forecast?lat=${lat}&lng=${long}`
-          getApiData()
-        }
-        )
-    } else {
-        console.log("Geo location not supported")
+
+function getPosition() {
+    if (cityInput.value == "") {  
+      console.log("Empty fields")
+    } else{
+      getLatLong()
     }
 }
 
+async function getLatLong() {
+  const location = cityInput.value
+  const positionAPIUrl = `https://api.opencagedata.com/geocode/v1/json?q=${location}&key=${positionAPIKey}`
+  const response = await fetch(positionAPIUrl)
+  const responseJson = await response.json()
+  city = responseJson.results[0].components.city + ", "
+  country = responseJson.results[0].components.country
+  lat = responseJson.results[0].geometry.lat
+  long = responseJson.results[0].geometry.lng
+  getApiData()
+}
+
 async function getApiData(){
+  apiURL = `https://api.openuv.io/api/v1/forecast?lat=${lat}&lng=${long}`
   const response = await fetch(apiURL, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'x-access-token': apiKey
+      'x-access-token': uvAPIKey
     }
   })
   const responseJson = await response.json()
   uvDataArray = responseJson.result
-  console.log(uvDataArray)
-  const labels = [
-    uvDataArray[0].uv_time, 
-    uvDataArray[1].uv_time, 
-    uvDataArray[2].uv_time, 
-    uvDataArray[3].uv_time, 
-    uvDataArray[4].uv_time, 
-    uvDataArray[5].uv_time, 
-    uvDataArray[6].uv_time, 
-    uvDataArray[7].uv_time, 
-    uvDataArray[8].uv_time, 
-    uvDataArray[9].uv_time, 
-    uvDataArray[10].uv_time, 
-    uvDataArray[11].uv_time, 
-    uvDataArray[12].uv_time, 
-    uvDataArray[13].uv_time
-  ];
+
+  // const uvTime2 = uvDataArray.filter(test1 => test1.uv_time)
+  // const uv2 = uvDataArray.filter(uvData => uvData.uv)
+  
+  const uvTime = []
+  const uvData = []
+
+  uvDataArray.forEach(element => {
+    let d = new Date(element.uv_time)
+    let hour = d.getHours()
+    let min = d.getMinutes()
+    if(min < 10){
+      min = "0" + min
+    }
+    if(hour < 12){
+      min = min + "am"
+    } else{
+      min = min + "pm"
+    }
+    if(hour > 12){
+      hour = hour - 12
+    }
+    if(hour == 0){
+      hour = 12
+    }
+    let time = hour + ":" + min
+    uvTime.push(time)
+  });
+
+  uvDataArray.forEach(element => {
+    uvData.push(element.uv)
+  });
+
+  if(city == undefined + ", "){
+    city = ""
+  }
+
+  const labels = uvTime;
   const data = {
     labels: labels,
     datasets: [{
-      label: 'Todays UV Index',
+      label: `Todays expected UV Forecast in ${city}${country}`,
       backgroundColor: 'rgb(255, 99, 132)',
       borderColor: 'rgb(255, 99, 132)',
-      data: [
-      uvDataArray[0].uv, 
-      uvDataArray[1].uv, 
-      uvDataArray[3].uv, 
-      uvDataArray[4].uv, 
-      uvDataArray[5].uv, 
-      uvDataArray[6].uv, 
-      uvDataArray[7].uv, 
-      uvDataArray[8].uv, 
-      uvDataArray[9].uv, 
-      uvDataArray[10].uv, 
-      uvDataArray[11].uv, 
-      uvDataArray[12].uv, 
-      uvDataArray[13].uv 
-    ],
+      data: uvData,
     }]
   };
   
   const config = {
-    type: 'bar',
+    type: 'line',
     data: data,
     options: {
       scales: {
         y: {
-          beginAtZero: true
+          beginAtZero: true,
+          suggestedMin: 0,
+          suggestedMax: 12
         }
       }
     },
@@ -90,31 +113,23 @@ async function getApiData(){
     document.getElementById('myChart'),
     config
   )
-
-  
 }
 
-// async function showPosition(position) {
-//     let longitude = position.coords.longitude
-//     let latitude = position.coords.latitude
-//     const response = await fetch(`https://api.openuv.io/api/v1/forecast?lat=${latitude}&lng=${longitude}`, {
-//         method: 'GET',
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'x-access-token': apiKey,
-//         }
-//     });
-//     const uvDataArray = await response.json()
-//     console.log(uvDataArray.result)
-//     return uvDataArray.result
-//     uvDataArray.result.forEach(element => {
-//         let date = new Date(element.uv_time)
-//         let hour = date.getHours()
-//         let seconds = date.getSeconds()
-//         uvHtml.innerHTML +=  `${(element.uv)} - ${hour}:${seconds} | `
-//     })
-// }
-
-// const uvData = function showPosition(position)
-
-
+const autoCompleteJS = new autoComplete({
+  placeHolder: "Search for City...",
+  data: {
+      src: ["Melbourne, Australia" , "Beijing, China" , "Tokyo, Japan", "Paris, France"],
+      cache: true,
+  },
+  resultItem: {
+      highlight: true
+  },
+  events: {
+      input: {
+          selection: (event) => {
+              const selection = event.detail.selection.value;
+              autoCompleteJS.input.value = selection;
+          }
+      }
+  }
+})
