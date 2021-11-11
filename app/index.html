@@ -62,19 +62,18 @@
     </div>
 
     <div id="container" class="container">
-      <div class="mt-3 text-center">
-        <p id="uv"></p>
-      </div>
 
-      <div>
+      <div class="container">
         <canvas id="myChart"></canvas>
       </div>
 
-      <div class="mt-3 mb-5 text-center">
+      <div class="text-center">
         <div class="autoComplete_wrapper font-monospace">
-          <input class="font-monospace" id="autoComplete" type="search" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off">
+          <input class="font-monospace enter" id="autoComplete" type="search" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" maxlength="2048" tabindex="1">
         </div>
-          <button class="btn btn-warning font-monospace" onclick="getPosition()">Get UV Index</button>
+          <button id="getUVButton" class="btn btn-warning font-monospace">Get UV Index</button>
+          <p id="timeText" class="font-monospace text-white">All times are in AEDT</p>
+          <button id="resetButton" class="btn btn-warning font-monospace"><a id="resetLink" href="index.html">Search a new city</a></button>
       </div>
   </div>
 </body>

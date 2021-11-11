@@ -472,8 +472,24 @@
   }
   #container{
       position: absolute;
-      top: 10vh;
-      left: 13vw;
+      top: 13vh;
+      left: 15vw;
       z-index: 3;
+  }
+  #resetLink{
+    text-decoration: none;
+    color: #000;
+  }
+  #resetButton{
+    display: none;
+  }
+  #autoComplete{
+    display: inline-block;
+  }
+  #getUVButton{
+    display: inline-block;
+  }
+  #timeText{
+    display: none;
   }
   
