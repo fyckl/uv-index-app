@@ -93,6 +93,7 @@ async function getApiData(){
   const uvTime = []
   const uvData = []
 
+  // Function to get an array of the time
   uvDataArray.forEach(element => {
 
     let d = new Date(element.uv_time)
@@ -128,6 +129,7 @@ async function getApiData(){
 
   });
 
+  // Function to get an array of the UV
   uvDataArray.forEach(element => {
     uvData.push(element.uv)
   });
@@ -138,6 +140,7 @@ async function getApiData(){
 
   }
 
+  // The chart variables
   const labels = uvTime;
   const data = {
 
@@ -174,7 +177,7 @@ async function getApiData(){
     config
 
   )
-
+  // If statement for when and when not to show certain elements
   if(config){
     inputEnter.style.display = 'none'
     getUVButton.style.display = 'none'
@@ -185,13 +188,13 @@ async function getApiData(){
 }
 
 
-
+// The autocomplete library for my search bar
 const autoCompleteJS = new autoComplete({
 
-  placeHolder: "Search for City...",
+  placeHolder: "Search for a City...",
   data: {
 
-      src: ["Melbourne, Australia" , "Beijing, China" , "Tokyo, Japan", "Paris, France"],
+      src: ["Melbourne, Australia", "Sydney, Australia" , "Beijing, China" , "Tokyo, Japan", "Paris, France", "Hong Kong, China", "Bangkok, Thailand", "London, England", "Macau, China", "New York City, US", "Istanbul, Turkey", "Singapore, Singapore", "Dubai, UAE", "Kuala Lumpur, Malaysia", "Delhi, India", "Antalya, Turkey", "Shenzhen, China", "Mumbai, India", "Phuket, Thailand", "Rome, Italy", "Pattaya, Thailand", "Taipei, Taiwan", "Mecca, Saudi Arabia", "Guangzhou, China", "Prague, Czechia", "Medina, Saudi Arabia", "Seoul, South Korea", "Amsterdam, Netherlands", "Agra, India"],
       cache: true,
 
   },

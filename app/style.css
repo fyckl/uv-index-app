@@ -492,4 +492,19 @@
   #timeText{
     display: none;
   }
-  
+  #homeButton,
+  #aboutButton{
+    z-index: 5;
+    background-color: rgba(0, 0, 0, 0);
+    border-color: rgba(0, 0, 0, 0);
+    font-size: 25px;
+    font-family: 'Roboto', sans-serif;
+  }
+  #about{
+    z-index: 3;
+    position: absolute;
+    top: 35vh;
+    left: 35vw;
+    font-size: 24.5px;
+    font-family: 'Roboto', sans-serif;
+  }

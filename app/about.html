@@ -7,10 +7,10 @@
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.6/dist/css/autoComplete.01.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
@@ -18,11 +18,13 @@
     <script src="index.js" defer></script>
 </head>
 <body>
-  
+    
     <div class="landscape">
-      <div>
-        <a id="aboutButton" class="btn btn-light ms-3 mt-3 text-primary fw-bold" href="about.html">About</a>
-      </div>
+
+        <div>
+            <a id="homeButton" class="btn btn-light ms-3 mt-3 text-primary fw-bold" href="index.html"><i class="fas fa-home"></i></a>
+        </div>
+        
       <div class="mountain"></div>
       <div class="mountain mountain-2"></div>
       <div class="mountain mountain-3"></div>
@@ -65,22 +67,19 @@
         <div class="reed"></div>
         <div class="reed reed-1"></div>
       </div>
+      <div id="about" class="container">
+        <h3>About</h3>
+        <p class="w-50 mt-5">This is a UV index forecast application, which allows you to search for a certain city and get it's UV index forecast.
+        <br>
+        <br>
+        The times are only in AEDT, so it is primary meant for Australians. This app has been made to spread awareness on UV rays and when they're at their most potent.
+        <br>
+        
+        </p>
+        
     </div>
-
-    <div id="container" class="container">
-
-      <div class="container">
-        <canvas id="myChart"></canvas>
-      </div>
-
-      <div class="text-center">
-        <div class="autoComplete_wrapper font-monospace">
-          <input class="font-monospace enter" id="autoComplete" type="search" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" maxlength="2048" tabindex="1">
-        </div>
-          <button id="getUVButton" class="btn btn-warning font-monospace">Get UV Index</button>
-          <p id="timeText" class="font-monospace text-white">All times are in AEDT</p>
-          <button id="resetButton" class="btn btn-warning font-monospace"><a id="resetLink" href="index.html">Search a new city</a></button>
-      </div>
-  </div>
+    </div>
+    
+    
 </body>
 </html>
