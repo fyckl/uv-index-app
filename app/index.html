@@ -21,7 +21,7 @@
   
     <div class="landscape">
       <div>
-        <a id="aboutButton" class="btn btn-light ms-3 mt-3 text-primary fw-bold" href="about.html">About</a>
+        <a id="aboutButton" class="btn btn-light ms-3 mt-3 text-dark fw-bold" href="about.html">About</a>
       </div>
       <div class="mountain"></div>
       <div class="mountain mountain-2"></div>
@@ -72,7 +72,9 @@
       <div class="container">
         <canvas id="myChart"></canvas>
       </div>
-
+      <div id="error" class="alert alert-danger text-center font-monospace w-100 px-0" role="alert">
+        Unable to get UV forecast, please try another city or try again later
+      </div>
       <div class="text-center">
         <div class="autoComplete_wrapper font-monospace">
           <input class="font-monospace enter" id="autoComplete" type="search" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" maxlength="2048" tabindex="1">

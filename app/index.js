@@ -12,6 +12,7 @@ const inputEnter = document.getElementById('autoComplete')
 const resetButton = document.getElementById('resetButton')
 const timeText = document.getElementById('timeText')
 var chart = document.getElementById('myChart')
+const errorMessage = document.getElementById('error')
 
 // Variables for 
 let lat = null
@@ -29,13 +30,7 @@ window.addEventListener('load', function(){
 
 // Event listener for the button which triggers a function
 getUVButton.addEventListener('click', getPosition)
-inputEnter.addEventListener('keypress', function(e){
-    console.log(e)
-    if(e.key == 'Enter'){
-      console.log('test')
-      getPosition()
-  }
-})
+
 
 // A function to check if the input is empty, if not proceeds to next function
 function getPosition() {
@@ -52,27 +47,33 @@ function getPosition() {
 }
 
 // A function that gets the lat and long of a searched query then triggers another function
-async function getLatLong() {
 
-  const location = cityInput.value
-  const positionAPIUrl = `https://api.opencagedata.com/geocode/v1/json?q=${location}&key=${positionAPIKey}`
-  const response = await fetch(positionAPIUrl)
-  const responseJson = await response.json()
+  async function getLatLong() {
+    try {
+      const location = cityInput.value
+      const positionAPIUrl = `https://api.opencagedata.com/geocode/v1/json?q=${location}&key=${positionAPIKey}`
+      const response = await fetch(positionAPIUrl)
+      const responseJson = await response.json()
 
-  city = responseJson.results[0].components.city + ", "
-  country = responseJson.results[0].components.country
+      city = responseJson.results[0].components.city + ", "
+      country = responseJson.results[0].components.country
 
-  lat = responseJson.results[0].geometry.lat
-  long = responseJson.results[0].geometry.lng
-  // console.log(lat + " " + long)
-  getApiData()
+      lat = responseJson.results[0].geometry.lat
+      long = responseJson.results[0].geometry.lng
+      // console.log(lat + " " + long)
+      getApiData()
+    } catch{
+      errorMessage.style.display = "block"
+    } 
+  }
 
-}
 
 // This function get's the UV Index data as well as generating the graph for it
 async function getApiData(){
 
-  apiURL = `https://api.openuv.io/api/v1/forecast?lat=${lat}&lng=${long}`
+  errorMessage.style.display = "none"
+  try{
+    apiURL = `https://api.openuv.io/api/v1/forecast?lat=${lat}&lng=${long}`
   const response = await fetch(apiURL, {
 
     method: 'GET',
@@ -185,6 +186,10 @@ async function getApiData(){
     timeText.style.display = 'block'
   }
   localStorage.setItem("searched item", `${city}${country}`)
+  } catch{
+    errorMessage.style.display = "block"
+  }
+  
 }
 
 

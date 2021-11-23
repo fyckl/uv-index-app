@@ -508,3 +508,9 @@
     font-size: 24.5px;
     font-family: 'Roboto', sans-serif;
   }
+  #error{
+    padding-left: 0px;
+    padding-right: 0px;
+    display: none;
+  }
+  
